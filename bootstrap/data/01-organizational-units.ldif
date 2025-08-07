@@ -1,0 +1,24 @@
+dn: ou=people,dc=planetexpress,dc=com
+objectClass: organizationalUnit
+ou: people
+description: Planet Express Employees
+
+dn: ou=groups,dc=planetexpress,dc=com
+objectClass: organizationalUnit
+ou: groups
+description: Organizational Groups
+
+dn: ou=robots,dc=planetexpress,dc=com
+objectClass: organizationalUnit
+ou: robots
+description: Robot Employees
+
+dn: ou=mutants,dc=planetexpress,dc=com
+objectClass: organizationalUnit
+ou: mutants
+description: Mutant Employees
+
+dn: ou=departments,dc=planetexpress,dc=com
+objectClass: organizationalUnit
+ou: departments
+description: Company Departments

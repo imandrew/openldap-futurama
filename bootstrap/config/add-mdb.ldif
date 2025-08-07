@@ -1,0 +1,14 @@
+dn: olcDatabase=mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: mdb
+olcSuffix: dc=planetexpress,dc=com
+olcRootDN: cn=admin,dc=planetexpress,dc=com
+olcRootPW: {SSHA}bLrRE7YOAEnRJkG8Whv9ObmEQgx3b9By
+olcDbDirectory: /var/lib/openldap
+olcDbMaxSize: 1073741824
+olcDbIndex: objectClass eq,pres
+olcDbIndex: ou,cn,mail,sn,givenName eq,pres,sub
+olcDbIndex: sAMAccountName eq,pres,sub
+olcDbIndex: userPrincipalName eq,pres,sub
+olcDbIndex: memberOf eq

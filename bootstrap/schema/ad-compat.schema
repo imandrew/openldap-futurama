@@ -1,0 +1,31 @@
+# Minimal AD Compatibility Schema for testing
+# Provides sAMAccountName and other common AD attributes
+
+# sAMAccountName - Most important AD attribute
+attributetype ( 1.2.840.113556.1.4.221
+    NAME 'sAMAccountName'
+    DESC 'MS AD SAM Account Name'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+    SINGLE-VALUE )
+
+# userPrincipalName - user@domain format
+attributetype ( 1.2.840.113556.1.4.656
+    NAME 'userPrincipalName'
+    DESC 'MS AD User Principal Name'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+    SINGLE-VALUE )
+
+# memberOf - automatically defined by memberOf overlay, don't redefine
+
+# displayName - already defined in inetorgperson schema
+
+# Extend with AD attributes - use AUXILIARY without SUP
+objectclass ( 1.3.6.1.4.1.99999.1.1
+    NAME 'adUser'
+    DESC 'AD Compatible User Extensions'
+    AUXILIARY
+    MAY ( sAMAccountName $ userPrincipalName ) )

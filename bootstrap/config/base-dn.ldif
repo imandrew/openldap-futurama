@@ -1,0 +1,7 @@
+dn: dc=planetexpress,dc=com
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+dc: planetexpress
+o: Planet Express Inc
+description: Good news, everyone!

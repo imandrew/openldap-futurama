@@ -1,0 +1,41 @@
+dn: cn=ship_crew,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: ship_crew
+description: Planet Express Ship Crew
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=delivery_crew,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: delivery_crew
+description: Delivery Crew Members
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=scientists,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: scientists
+description: Scientific Personnel
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=management,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: management
+description: Management Team
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=interns,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: interns
+description: Unpaid Interns
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=bureaucrats,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: bureaucrats
+description: Central Bureaucracy
+member: cn=admin,dc=planetexpress,dc=com
+
+dn: cn=doop,ou=groups,dc=planetexpress,dc=com
+objectClass: groupOfNames
+cn: doop
+description: Democratic Order of Planets
+member: cn=admin,dc=planetexpress,dc=com

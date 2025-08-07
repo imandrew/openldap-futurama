@@ -1,0 +1,120 @@
+dn: uid=fry,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: fry
+-
+add: userPrincipalName
+userPrincipalName: fry@planetexpress.com
+
+dn: uid=leela,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: leela
+-
+add: userPrincipalName
+userPrincipalName: leela@planetexpress.com
+
+dn: uid=bender,ou=robots,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: bender
+-
+add: userPrincipalName
+userPrincipalName: bender@planetexpress.com
+
+dn: uid=professor,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: professor
+-
+add: userPrincipalName
+userPrincipalName: professor@planetexpress.com
+
+dn: uid=amy,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: amy
+-
+add: userPrincipalName
+userPrincipalName: amy@planetexpress.com
+
+dn: uid=hermes,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: hermes
+-
+add: userPrincipalName
+userPrincipalName: hermes@planetexpress.com
+
+dn: uid=zoidberg,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: zoidberg
+-
+add: userPrincipalName
+userPrincipalName: zoidberg@planetexpress.com
+
+dn: uid=scruffy,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: scruffy
+-
+add: userPrincipalName
+userPrincipalName: scruffy@planetexpress.com
+
+dn: uid=nibbler,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: nibbler
+-
+add: userPrincipalName
+userPrincipalName: nibbler@planetexpress.com
+
+dn: uid=zapp,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: zapp
+-
+add: userPrincipalName
+userPrincipalName: zapp@planetexpress.com
+
+dn: uid=kif,ou=people,dc=planetexpress,dc=com
+changetype: modify
+add: objectClass
+objectClass: adUser
+-
+add: sAMAccountName
+sAMAccountName: kif
+-
+add: userPrincipalName
+userPrincipalName: kif@planetexpress.com

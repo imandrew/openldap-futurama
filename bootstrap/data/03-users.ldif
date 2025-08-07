@@ -1,0 +1,220 @@
+dn: uid=fry,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: fry
+cn: Philip J. Fry
+givenName: Philip
+sn: Fry
+displayName: Fry
+mail: fry@planetexpress.com
+userPassword: {SSHA}KfYGCwg0gLlRNax+dCxfwD2o48jA047T
+uidNumber: 1001
+gidNumber: 1000
+homeDirectory: /home/fry
+loginShell: /bin/bash
+employeeNumber: PE001
+employeeType: Delivery Boy
+title: Delivery Boy
+departmentNumber: Delivery
+
+dn: uid=leela,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: leela
+cn: Turanga Leela
+givenName: Turanga
+sn: Leela
+displayName: Leela
+mail: leela@planetexpress.com
+userPassword: {SSHA}Q4TUmVLpCjgTsrq+nhE6VH3XoCWTlpGm
+uidNumber: 1002
+gidNumber: 1000
+homeDirectory: /home/leela
+loginShell: /bin/bash
+employeeNumber: PE002
+employeeType: Captain
+title: Ship Captain
+departmentNumber: Operations
+
+dn: uid=bender,ou=robots,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: bender
+cn: Bender Bending Rodriguez
+givenName: Bender
+sn: Rodriguez
+displayName: Bender
+mail: bender@planetexpress.com
+userPassword: {SSHA}zLbM1Sz12YMSgY0KGbsucO/XP8RXuaxo
+uidNumber: 1003
+gidNumber: 1000
+homeDirectory: /home/bender
+loginShell: /bin/bash
+employeeNumber: PE003
+employeeType: Robot
+title: Ship Cook / Assistant
+departmentNumber: Operations
+description: Serial Number: 2716057
+
+dn: uid=professor,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: professor
+cn: Professor Hubert Farnsworth
+givenName: Hubert
+sn: Farnsworth
+displayName: Professor Farnsworth
+mail: professor@planetexpress.com
+userPassword: {SSHA}8eE4/Zfj+fc2i6S/hm3bMIbHP6n2/n8J
+uidNumber: 1004
+gidNumber: 1000
+homeDirectory: /home/professor
+loginShell: /bin/bash
+employeeNumber: PE004
+employeeType: CEO
+title: CEO and Mad Scientist
+departmentNumber: Management
+
+dn: uid=amy,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: amy
+cn: Amy Wong
+givenName: Amy
+sn: Wong
+displayName: Amy Wong
+mail: amy@planetexpress.com
+userPassword: {SSHA}bRnxRnAN7G4FYSueaPOUr65bGpxqWBM/
+uidNumber: 1005
+gidNumber: 1000
+homeDirectory: /home/amy
+loginShell: /bin/bash
+employeeNumber: PE005
+employeeType: Intern
+title: Intern
+departmentNumber: Engineering
+
+dn: uid=hermes,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: hermes
+cn: Hermes Conrad
+givenName: Hermes
+sn: Conrad
+displayName: Hermes Conrad
+mail: hermes@planetexpress.com
+userPassword: {SSHA}SdZrq0+wwuBL02n6ohoCp08cv+7SJwsh
+uidNumber: 1006
+gidNumber: 1000
+homeDirectory: /home/hermes
+loginShell: /bin/bash
+employeeNumber: PE006
+employeeType: Bureaucrat
+title: Grade 36 Bureaucrat
+departmentNumber: Accounting
+
+dn: uid=zoidberg,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: zoidberg
+cn: Dr. John Zoidberg
+givenName: John
+sn: Zoidberg
+displayName: Dr. Zoidberg
+mail: zoidberg@planetexpress.com
+userPassword: {SSHA}hDaovssahu7owXKKGC/m89RHUjWYDapt
+uidNumber: 1007
+gidNumber: 1000
+homeDirectory: /home/zoidberg
+loginShell: /bin/bash
+employeeNumber: PE007
+employeeType: Doctor
+title: Staff Doctor
+departmentNumber: Medical
+
+dn: uid=scruffy,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: scruffy
+cn: Scruffy Scruffington
+givenName: Scruffy
+sn: Scruffington
+displayName: Scruffy
+mail: scruffy@planetexpress.com
+userPassword: {SSHA}I4yTlqTT6uffLqW39sNp/YXQSs/LeMFi
+uidNumber: 1008
+gidNumber: 1000
+homeDirectory: /home/scruffy
+loginShell: /bin/bash
+employeeNumber: PE008
+employeeType: Janitor
+title: Janitor
+departmentNumber: Maintenance
+
+dn: uid=nibbler,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: nibbler
+cn: Lord Nibbler
+givenName: Lord
+sn: Nibbler
+displayName: Nibbler
+mail: nibbler@planetexpress.com
+userPassword: {SSHA}z5Havr6t+coOur1dhW+bC1eGy7b9cMpa
+uidNumber: 1009
+gidNumber: 1000
+homeDirectory: /home/nibbler
+loginShell: /bin/bash
+employeeNumber: PE009
+employeeType: Pet/Secret Agent
+title: Ship Mascot
+departmentNumber: Operations
+
+dn: uid=zapp,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: zapp
+cn: Zapp Brannigan
+givenName: Zapp
+sn: Brannigan
+displayName: Captain Zapp Brannigan
+mail: zapp@planetexpress.com
+userPassword: {SSHA}YOUhAyB0aRpjeuXca1lbKQuLwoxfBqCc
+uidNumber: 1010
+gidNumber: 1000
+homeDirectory: /home/zapp
+loginShell: /bin/bash
+employeeNumber: DOOP001
+employeeType: Captain
+title: 25-Star General
+departmentNumber: DOOP
+
+dn: uid=kif,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: kif
+cn: Kif Kroker
+givenName: Kif
+sn: Kroker
+displayName: Lieutenant Kif Kroker
+mail: kif@planetexpress.com
+userPassword: {SSHA}V9sdzcZ+L36Jjik709/5uOZg+F5pVnZ0
+uidNumber: 1011
+gidNumber: 1000
+homeDirectory: /home/kif
+loginShell: /bin/bash
+employeeNumber: DOOP002
+employeeType: Lieutenant
+title: Lieutenant
+departmentNumber: DOOP
