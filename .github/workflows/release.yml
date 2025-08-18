@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+        else
+          VERSION="${{ github.ref_name }}"
+        fi
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "Releasing version: $VERSION"
+    
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Build and push Docker image
+      run: |
+        docker build -t ghcr.io/${{ github.repository }}:${{ env.VERSION }} .
+        docker tag ghcr.io/${{ github.repository }}:${{ env.VERSION }} ghcr.io/${{ github.repository }}:latest
+        docker push ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+        docker push ghcr.io/${{ github.repository }}:latest
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        name: Release ${{ env.VERSION }}
+        body: |
+          ## OpenLDAP Futurama ${{ env.VERSION }}
+          
+          AD-compatible LDAP test server with Futurama theme.
+          
+          ### Docker Image
+          ```bash
+          docker pull ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+          ```
+          
+          ### Quick Start
+          ```bash
+          docker run -d -p 389:389 ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+          ```
+          
+          See [README](https://github.com/${{ github.repository }}) for full documentation.
+        draft: false
+        prerelease: false

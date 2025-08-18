@@ -1,0 +1,238 @@
+# Planet Express Users with complete AD compatibility
+# All users with full attributes including AD extensions
+
+dn: uid=fry,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: fry
+cn: Philip J. Fry
+sn: Fry
+givenName: Philip
+displayName: Philip J. Fry
+mail: fry@planetexpress.com
+userPassword: {SSHA}iLpfZfOfm2mYKzacFEEMRI9LM3/cJfm0
+uidNumber: 1001
+gidNumber: 1001
+homeDirectory: /home/fry
+loginShell: /bin/bash
+title: Delivery Boy
+employeeType: Human
+employeeNumber: PE001
+departmentNumber: Delivery
+telephoneNumber: +1-212-555-0101
+sAMAccountName: fry
+userPrincipalName: fry@planetexpress.com
+
+dn: uid=leela,ou=mutants,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: leela
+cn: Turanga Leela
+sn: Turanga
+givenName: Leela
+displayName: Turanga Leela
+mail: leela@planetexpress.com
+userPassword: {SSHA}6mKI9IdCOMPWew8UcxjmK8ovOfizdcDu
+uidNumber: 1002
+gidNumber: 1002
+homeDirectory: /home/leela
+loginShell: /bin/bash
+title: Ship Captain
+employeeType: Mutant
+employeeNumber: PE002
+departmentNumber: Command
+telephoneNumber: +1-212-555-0102
+sAMAccountName: leela
+userPrincipalName: leela@planetexpress.com
+
+dn: uid=bender,ou=robots,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: bender
+cn: Bender Bending Rodriguez
+sn: Rodriguez
+givenName: Bender
+displayName: Bender B. Rodriguez
+mail: bender@planetexpress.com
+userPassword: {SSHA}kKBscwh1MplpvVzxZyOle3QtlN2uIiFT
+uidNumber: 1003
+gidNumber: 1003
+homeDirectory: /home/bender
+loginShell: /bin/bash
+title: Ship Cook
+employeeType: Robot
+employeeNumber: PE003
+departmentNumber: Ship Operations
+telephoneNumber: +1-212-555-0103
+description: Bending Unit 22, Serial 2716057
+sAMAccountName: bender
+userPrincipalName: bender@planetexpress.com
+
+dn: uid=professor,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: professor
+cn: Professor Hubert J. Farnsworth
+sn: Farnsworth
+givenName: Hubert
+displayName: Professor Farnsworth
+mail: professor@planetexpress.com
+userPassword: {SSHA}HntQfT1hO1BwZseVMKmZ9SZUOE66NL+b
+uidNumber: 1004
+gidNumber: 1004
+homeDirectory: /home/professor
+loginShell: /bin/bash
+title: CEO and Founder
+employeeType: Human
+employeeNumber: PE004
+departmentNumber: Executive
+telephoneNumber: +1-212-555-0100
+sAMAccountName: professor
+userPrincipalName: professor@planetexpress.com
+
+dn: uid=amy,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: amy
+cn: Amy Wong
+sn: Wong
+givenName: Amy
+displayName: Amy Wong
+mail: amy@planetexpress.com
+userPassword: {SSHA}rY8CpsoB98VbpOMnK9GPN72NQZsqGGgR
+uidNumber: 1005
+gidNumber: 1005
+homeDirectory: /home/amy
+loginShell: /bin/bash
+title: Intern
+employeeType: Human
+employeeNumber: PE005
+departmentNumber: Engineering
+telephoneNumber: +1-212-555-0105
+sAMAccountName: amy
+userPrincipalName: amy@planetexpress.com
+
+dn: uid=hermes,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: hermes
+cn: Hermes Conrad
+sn: Conrad
+givenName: Hermes
+displayName: Hermes Conrad
+mail: hermes@planetexpress.com
+userPassword: {SSHA}30NEC30Z0JpIahSfzXGrUxwxbJsUbK+O
+uidNumber: 1006
+gidNumber: 1006
+homeDirectory: /home/hermes
+loginShell: /bin/bash
+title: Bureaucrat Grade 34
+employeeType: Human
+employeeNumber: PE006
+departmentNumber: Administration
+telephoneNumber: +1-212-555-0106
+sAMAccountName: hermes
+userPrincipalName: hermes@planetexpress.com
+
+dn: uid=zoidberg,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: zoidberg
+cn: Dr. John A. Zoidberg
+sn: Zoidberg
+givenName: John
+displayName: Dr. Zoidberg
+mail: zoidberg@planetexpress.com
+userPassword: {SSHA}/6T+ihmuWmtJEHrGmedjki6D8Wt3zQF3
+uidNumber: 1007
+gidNumber: 1007
+homeDirectory: /home/zoidberg
+loginShell: /bin/bash
+title: Staff Doctor
+employeeType: Alien
+employeeNumber: PE007
+departmentNumber: Medical
+telephoneNumber: +1-212-555-0107
+sAMAccountName: zoidberg
+userPrincipalName: zoidberg@planetexpress.com
+
+dn: uid=scruffy,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: scruffy
+cn: Scruffy Scruffington
+sn: Scruffington
+givenName: Scruffy
+displayName: Scruffy
+mail: scruffy@planetexpress.com
+userPassword: {SSHA}I4yTlqTT6uffLqW39sNp/YXQSs/LeMFi
+uidNumber: 1008
+gidNumber: 1008
+homeDirectory: /home/scruffy
+loginShell: /bin/bash
+title: Janitor
+employeeType: Human
+employeeNumber: PE008
+departmentNumber: Maintenance
+telephoneNumber: +1-212-555-0108
+sAMAccountName: scruffy
+userPrincipalName: scruffy@planetexpress.com
+
+dn: uid=nibbler,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: adUser
+uid: nibbler
+cn: Lord Nibbler
+sn: Nibbler
+givenName: Lord
+displayName: Nibbler
+mail: nibbler@planetexpress.com
+userPassword: {SSHA}z5Havr6t+coOur1dhW+bC1eGy7b9cMpa
+uidNumber: 1009
+gidNumber: 1009
+homeDirectory: /home/nibbler
+loginShell: /bin/bash
+title: Ship Mascot
+employeeType: Pet/Secret Agent
+employeeNumber: PE009
+departmentNumber: Operations
+telephoneNumber: +1-212-555-0109
+sAMAccountName: nibbler
+userPrincipalName: nibbler@planetexpress.com
+

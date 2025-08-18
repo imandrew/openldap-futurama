@@ -1,0 +1,35 @@
+# Planet Express LDAP database
+# MDB, memberOf and refint overlay
+
+dn: olcDatabase=mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: mdb
+olcSuffix: dc=planetexpress,dc=com
+olcRootDN: cn=admin,dc=planetexpress,dc=com
+olcRootPW: {SSHA}bLrRE7YOAEnRJkG8Whv9ObmEQgx3b9By
+olcDbDirectory: /var/lib/openldap/openldap-data
+olcDbMaxSize: 1073741824
+olcDbIndex: objectClass eq,pres
+olcDbIndex: ou,cn,mail,sn,givenName eq,pres,sub
+olcDbIndex: sAMAccountName eq,pres,sub
+olcDbIndex: userPrincipalName eq,pres,sub
+olcDbIndex: memberOf eq
+
+dn: olcOverlay=memberof,olcDatabase={1}mdb,cn=config
+objectClass: olcConfig
+objectClass: olcMemberOfConfig
+objectClass: olcOverlayConfig
+olcOverlay: memberof
+olcMemberOfDangling: ignore
+olcMemberOfRefInt: TRUE
+olcMemberOfGroupOC: group
+olcMemberOfMemberAD: member
+olcMemberOfMemberOfAD: memberOf
+
+dn: olcOverlay=refint,olcDatabase={1}mdb,cn=config
+objectClass: olcConfig
+objectClass: olcOverlayConfig
+objectClass: olcRefintConfig
+olcOverlay: refint
+olcRefintAttribute: memberOf member manager owner

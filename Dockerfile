@@ -1,29 +1,35 @@
 FROM cgr.dev/chainguard/wolfi-base:latest
 
-# Install OpenLDAP packages including backends and overlays
-RUN apk update && apk add --no-cache \
+RUN apk add --no-cache \
     openldap \
     openldap-clients \
     openldap-back-mdb \
     openldap-overlay-memberof \
     openldap-overlay-refint \
-    bash
+    busybox \
+    && mkdir -p /etc/openldap/schema \
+               /var/lib/openldap/openldap-data \
+               /var/lib/openldap/run \
+               /var/run/openldap \
+               /usr/share/openldap-futurama \
+    && chown -R nonroot:nonroot /etc/openldap \
+                                /var/lib/openldap \
+                                /var/run/openldap \
+                                /usr/share/openldap-futurama \
+    && chmod 700 /var/lib/openldap/openldap-data \
+    && chmod 755 /etc/openldap/schema \
+                 /var/run/openldap \
+                 /usr/share/openldap-futurama
 
-# Create openldap user and directories
-RUN addgroup -g 389 openldap && \
-    adduser -u 389 -G openldap -h /var/lib/openldap -s /bin/bash -D openldap && \
-    mkdir -p /var/lib/openldap /etc/openldap/slapd.d /run/openldap && \
-    chmod 700 /var/lib/openldap && \
-    chmod 750 /etc/openldap/slapd.d && \
-    chown -R openldap:openldap /var/lib/openldap /etc/openldap /run/openldap
+COPY --chown=nonroot:nonroot --chmod=644 config/slapd.conf /etc/openldap/slapd.conf
+COPY --chown=nonroot:nonroot --chmod=644 config/ad-compat.schema /etc/openldap/schema/
+COPY --chown=nonroot:nonroot --chmod=644 ldif/*.ldif /usr/share/openldap-futurama/
+COPY --chown=root:root --chmod=755 entrypoint.sh /entrypoint.sh
 
-# Copy bootstrap files and entrypoint with proper ownership
-COPY --chown=openldap:openldap bootstrap/ /bootstrap/
-COPY --chown=openldap:openldap bootstrap/schema/*.schema /etc/openldap/schema/
-COPY --chown=openldap:openldap --chmod=755 entrypoint.sh ./entrypoint.sh
+ENV LDAP_LOG_LEVEL=256
 
-# Switch to non-root user
-USER openldap
+USER nonroot
 
 EXPOSE 389
-ENTRYPOINT ["./entrypoint.sh"]
+
+ENTRYPOINT ["/entrypoint.sh"]

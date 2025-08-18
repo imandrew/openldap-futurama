@@ -1,134 +1,111 @@
 # OpenLDAP Futurama Test Server
 
-A Wolfi-based OpenLDAP container pre-populated with Futurama characters for testing LDAP integrations. Built on Chainguard's secure Wolfi base image with Active Directory compatibility.
+An OpenLDAP container pre-populated with Futurama characters for testing LDAP integrations. Includes Active Directory compatibility features.
 
-**⚠️ Development/testing container with hardcoded credentials - not for production use.**
+**⚠️ Test/development only - hardcoded credentials**
 
 ## Quick Start
 
 ```bash
-# Run from GitHub Container Registry
-docker run -d -p 389:389 --name openldap-futurama ghcr.io/imandrew/openldap-futurama:latest
+# Using Docker
+docker run -d -p 389:389 ghcr.io/imandrew/openldap-futurama:latest
 
-# Test connectivity
-ldapsearch -x -H ldap://localhost -D "cn=admin,dc=planetexpress,dc=com" -w "GoodNewsEveryone" -b "dc=planetexpress,dc=com" "(uid=fry)" cn
-```
-
-**Server Details:**
-- **LDAP**: `ldap://localhost:389`
-- **Base DN**: `dc=planetexpress,dc=com`
-- **Admin**: `cn=admin,dc=planetexpress,dc=com`
-- **Password**: `GoodNewsEveryone`
-
-### Local Development (with phpLDAPadmin)
-
-```bash
-# Build and start with docker-compose (includes web UI)
+# Using local build
 make start
-
-# phpLDAPadmin available at http://localhost:8080
-make test  # Run tests
 ```
 
-## Features
+## Connection Details
 
-- **🛡️ Secure**: Wolfi-based minimal container with automatic security scanning
-- **🔄 AD Compatible**: `sAMAccountName`, `userPrincipalName`, `memberOf` overlay
-- **📊 Pre-populated**: Futurama characters, groups, and departments
-- **🚀 Testing Ready**: Perfect for LDAP integration testing
-- **🏗️ Multi-arch**: AMD64 and ARM64 support
+- **Server**: `ldap://localhost:389`
+- **Base DN**: `dc=planetexpress,dc=com`
+- **Admin DN**: `cn=admin,dc=planetexpress,dc=com`
+- **Admin Password**: `GoodNewsEveryone`
 
-## Test Data
+## Test Users
 
-### Users
-All users have **password = username** (e.g., `fry`/`fry`):
+All users have password matching their username (e.g., username: `fry`, password: `fry`):
 
-| Username | Name | Department |
-|----------|------|------------|
-| fry | Philip J. Fry | Delivery Boy |
-| leela | Turanga Leela | Ship Captain |
-| bender | Bender Rodriguez | Robot Cook |
-| professor | Prof. Farnsworth | CEO/Mad Scientist |
-| amy | Amy Wong | Intern |
-| hermes | Hermes Conrad | Bureaucrat |
-| zoidberg | Dr. Zoidberg | Staff Doctor |
-| scruffy | Scruffy Scruffington | Janitor |
+| Username | Email | Groups |
+|----------|-------|--------|
+| fry | fry@planetexpress.com | ship_crew, delivery_crew |
+| leela | leela@planetexpress.com | ship_crew, delivery_crew, management |
+| bender | bender@planetexpress.com | ship_crew, delivery_crew |
+| professor | professor@planetexpress.com | scientists, management |
+| amy | amy@planetexpress.com | scientists, interns |
+| hermes | hermes@planetexpress.com | management, bureaucrats |
+| zoidberg | zoidberg@planetexpress.com | - |
+| scruffy | scruffy@planetexpress.com | - |
+| nibbler | nibbler@planetexpress.com | ship_crew |
 
-### Groups
-- `ship_crew` - Fry, Leela, Bender, Nibbler
-- `delivery_crew` - Fry, Leela, Bender  
-- `scientists` - Professor, Amy
-- `management` - Professor, Hermes, Leela
+## Groups
+
+| Group Name | Members | Description |
+|------------|---------|-------------|
+| ship_crew | fry, leela, bender, nibbler | Planet Express Ship Crew |
+| delivery_crew | fry, leela, bender | Delivery Crew Members |
+| scientists | professor, amy | Scientific Personnel |
+| management | professor, hermes, leela | Management Team |
+| interns | amy | Unpaid Interns |
+| bureaucrats | hermes | Central Bureaucracy |
 
 ## Usage Examples
 
-### Basic Authentication Test
+### Test User Authentication
 ```bash
-# Test user login
 ldapsearch -x -H ldap://localhost \
   -D "uid=fry,ou=people,dc=planetexpress,dc=com" \
-  -w "fry" "(uid=fry)"
+  -w "fry" \
+  -b "dc=planetexpress,dc=com" "(uid=fry)"
 ```
 
-### AD-Style Search
+### Search by Email
 ```bash
-# Search by sAMAccountName with group membership
 ldapsearch -x -H ldap://localhost \
   -D "cn=admin,dc=planetexpress,dc=com" \
   -w "GoodNewsEveryone" \
-  "(sAMAccountName=bender)" memberOf
+  -b "dc=planetexpress,dc=com" "(mail=leela@planetexpress.com)"
 ```
 
-### Group Members
+### List Group Members
 ```bash
-# Find all ship crew members
 ldapsearch -x -H ldap://localhost \
   -D "cn=admin,dc=planetexpress,dc=com" \
   -w "GoodNewsEveryone" \
-  -b "cn=ship_crew,ou=groups,dc=planetexpress,dc=com"
+  -b "cn=ship_crew,ou=groups,dc=planetexpress,dc=com" member
 ```
 
-## Directory Structure
-
-```
-dc=planetexpress,dc=com
-├── ou=people      # Human employees
-├── ou=robots      # Robot employees  
-├── ou=mutants     # Mutant employees
-├── ou=groups      # Organizational groups
-└── ou=departments # Company departments
+### Check User's Groups (AD-style)
+```bash
+ldapsearch -x -H ldap://localhost \
+  -D "cn=admin,dc=planetexpress,dc=com" \
+  -w "GoodNewsEveryone" \
+  -b "dc=planetexpress,dc=com" "(sAMAccountName=fry)" memberOf
 ```
 
-## Container Registry
+## AD Compatibility Features
 
-**Available Images:**
-- `ghcr.io/imandrew/openldap-futurama:latest` (latest release)
-- `ghcr.io/imandrew/openldap-futurama:v1.0.0` (specific versions)
+- `sAMAccountName` attribute for all users
+- `memberOf` overlay for automatic group membership
+- AD-compatible `group` objectClass
+- Standard AD group types
 
-Images are automatically built with security scanning and published on releases.
-
-## Development
-
-**Requirements:** Docker, docker-compose
+## Docker Image
 
 ```bash
-make start    # Build and start with phpLDAPadmin
-make test     # Run LDAP tests
-make logs     # View container logs
-make shell    # Shell access
-make down     # Stop and clean up
+docker pull ghcr.io/imandrew/openldap-futurama:latest
 ```
 
-## Technical Details
+## Local Commands
 
-**Active Directory Compatibility:**
-- `sAMAccountName` - Short login names (indexed)
-- `userPrincipalName` - user@domain format (indexed)
-- `memberOf` overlay - Automatic group membership
-- `refint` overlay - Referential integrity
+```bash
+make build    # Build container
+make start    # Start server
+make stop     # Stop server
+make test     # Run tests
+make logs     # View logs
+make shell    # Container shell
+```
 
-**Persistence:**
-- `/var/lib/openldap` - Database files
-- `/etc/openldap/slapd.d` - Configuration
+## License
 
-Perfect for testing authentication systems, directory integrations, or anything needing a populated LDAP server with realistic data! 🚀
+MIT
