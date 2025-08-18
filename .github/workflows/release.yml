@@ -3,7 +3,11 @@ name: Release
 on:
   push:
     tags:
+<<<<<<< HEAD
       - 'v*'
+=======
+      - 'v*'  # Trigger on version tags like v1.0.0
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
   workflow_dispatch:
     inputs:
       version:
@@ -12,11 +16,15 @@ on:
         type: string
 
 jobs:
+<<<<<<< HEAD
   ci:
     uses: ./.github/workflows/ci.yml
     
   release:
     needs: ci
+=======
+  release:
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -25,10 +33,24 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+<<<<<<< HEAD
     
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
       
+=======
+      
+    - name: Set version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+        else
+          VERSION="${{ github.ref_name }}"
+        fi
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "Releasing version: $VERSION"
+    
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
       with:
@@ -36,6 +58,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         
+<<<<<<< HEAD
     - name: Build and push multi-arch Docker image
       uses: docker/build-push-action@v6
       with:
@@ -53,17 +76,41 @@ jobs:
         name: Release ${{ github.event.inputs.version || github.ref_name }}
         body: |
           ## OpenLDAP Futurama ${{ github.event.inputs.version || github.ref_name }}
+=======
+    - name: Build and push Docker image
+      run: |
+        docker build -t ghcr.io/${{ github.repository }}:${{ env.VERSION }} .
+        docker tag ghcr.io/${{ github.repository }}:${{ env.VERSION }} ghcr.io/${{ github.repository }}:latest
+        docker push ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+        docker push ghcr.io/${{ github.repository }}:latest
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        name: Release ${{ env.VERSION }}
+        body: |
+          ## OpenLDAP Futurama ${{ env.VERSION }}
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
           
           AD-compatible LDAP test server with Futurama theme.
           
           ### Docker Image
           ```bash
+<<<<<<< HEAD
           docker pull ghcr.io/${{ github.repository }}:${{ github.event.inputs.version || github.ref_name }}
+=======
+          docker pull ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
           ```
           
           ### Quick Start
           ```bash
+<<<<<<< HEAD
           docker run -d -p 389:389 ghcr.io/${{ github.repository }}:${{ github.event.inputs.version || github.ref_name }}
+=======
+          docker run -d -p 389:389 ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
           ```
           
           See [README](https://github.com/${{ github.repository }}) for full documentation.

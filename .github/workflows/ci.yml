@@ -6,14 +6,20 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+<<<<<<< HEAD
   workflow_call:
+=======
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
     permissions:
       contents: read
       security-events: write
+=======
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
     
     steps:
     - name: Checkout repository
@@ -58,6 +64,7 @@ jobs:
           -D "cn=admin,dc=planetexpress,dc=com" -w "GoodNewsEveryone" \
           -b "dc=planetexpress,dc=com" "(uid=amy)" memberOf
           
+<<<<<<< HEAD
     - name: Security scan (SARIF)
       uses: aquasecurity/trivy-action@0.32.0
       with:
@@ -75,11 +82,19 @@ jobs:
         
     - name: Security scan (table)
       uses: aquasecurity/trivy-action@0.32.0
+=======
+    - name: Security scan
+      uses: aquasecurity/trivy-action@master
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
       with:
         image-ref: 'openldap-futurama:latest'
         format: 'table'
         severity: 'CRITICAL,HIGH'
+<<<<<<< HEAD
         exit-code: 0
+=======
+        exit-code: 0  # Don't fail on vulnerabilities for now
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
         
     - name: Cleanup
       if: always()

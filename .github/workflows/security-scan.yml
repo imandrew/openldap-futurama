@@ -21,7 +21,11 @@ jobs:
       run: docker build -t openldap-futurama:test .
       
     - name: Run Trivy vulnerability scanner
+<<<<<<< HEAD
       uses: aquasecurity/trivy-action@0.32.0
+=======
+      uses: aquasecurity/trivy-action@master
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
       with:
         image-ref: 'openldap-futurama:test'
         format: 'sarif'
@@ -34,7 +38,11 @@ jobs:
         sarif_file: 'trivy-results.sarif'
         
     - name: Run Trivy in table format for summary
+<<<<<<< HEAD
       uses: aquasecurity/trivy-action@0.32.0  
+=======
+      uses: aquasecurity/trivy-action@master  
+>>>>>>> dca3cee (refactor: simplify build process and improve AD compatibility)
       with:
         image-ref: 'openldap-futurama:test'
         format: 'table'
