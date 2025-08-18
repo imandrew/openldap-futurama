@@ -1,0 +1,59 @@
+# Planet Express Groups with AD-compatible structure
+# Groups that will automatically populate memberOf attributes
+# groupType: -2147483646 = Global Security Group (most common AD group type)
+
+dn: cn=ship_crew,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: ship_crew
+sAMAccountName: ship_crew
+groupType: -2147483646
+description: Planet Express Ship Crew
+member: uid=fry,ou=people,dc=planetexpress,dc=com
+member: uid=leela,ou=mutants,dc=planetexpress,dc=com
+member: uid=bender,ou=robots,dc=planetexpress,dc=com
+member: uid=nibbler,ou=people,dc=planetexpress,dc=com
+
+dn: cn=delivery_crew,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: delivery_crew
+sAMAccountName: delivery_crew
+groupType: -2147483646
+description: Delivery Crew Members
+member: uid=fry,ou=people,dc=planetexpress,dc=com
+member: uid=leela,ou=mutants,dc=planetexpress,dc=com
+member: uid=bender,ou=robots,dc=planetexpress,dc=com
+
+dn: cn=scientists,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: scientists
+sAMAccountName: scientists
+groupType: -2147483646
+description: Scientific Personnel
+member: uid=professor,ou=people,dc=planetexpress,dc=com
+member: uid=amy,ou=people,dc=planetexpress,dc=com
+
+dn: cn=management,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: management
+sAMAccountName: management
+groupType: -2147483646
+description: Management Team
+member: uid=professor,ou=people,dc=planetexpress,dc=com
+member: uid=hermes,ou=people,dc=planetexpress,dc=com
+member: uid=leela,ou=mutants,dc=planetexpress,dc=com
+
+dn: cn=interns,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: interns
+sAMAccountName: interns
+groupType: -2147483646
+description: Unpaid Interns
+member: uid=amy,ou=people,dc=planetexpress,dc=com
+
+dn: cn=bureaucrats,ou=groups,dc=planetexpress,dc=com
+objectClass: group
+cn: bureaucrats
+sAMAccountName: bureaucrats
+groupType: -2147483646
+description: Central Bureaucracy
+member: uid=hermes,ou=people,dc=planetexpress,dc=com

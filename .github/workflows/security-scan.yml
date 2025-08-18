@@ -7,106 +7,36 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  scan-published-image:
+  scan:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
       security-events: write
-
+      
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
-    - name: Scan published container image (JSON for processing)
+      
+    - name: Build Docker image
+      run: docker build -t openldap-futurama:test .
+      
+    - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@0.32.0
-      id: scan-json
       with:
-        image-ref: 'ghcr.io/imandrew/openldap-futurama:latest'
-        format: 'json'
-        output: 'trivy-results.json'
-        severity: 'CRITICAL,HIGH'
-        exit-code: 0  # Don't fail the workflow
-
-    - name: Scan published container image (SARIF for Security tab)
-      uses: aquasecurity/trivy-action@0.32.0
-      id: scan-sarif
-      with:
-        image-ref: 'ghcr.io/imandrew/openldap-futurama:latest'
+        image-ref: 'openldap-futurama:test'
         format: 'sarif'
         output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH'
-        exit-code: 0
-
-    - name: Upload scan results to GitHub Security tab
+        severity: 'CRITICAL,HIGH,MEDIUM'
+        
+    - name: Upload Trivy results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v3
-      if: always()
-      continue-on-error: true
       with:
-        sarif_file: trivy-results.sarif
-
-    - name: Check for critical vulnerabilities
-      id: check-vulns
-      run: |
-        if [ -f trivy-results.json ]; then
-          CRITICAL_COUNT=$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "CRITICAL")] | length' trivy-results.json)
-          HIGH_COUNT=$(jq '[.Results[]?.Vulnerabilities[]? | select(.Severity == "HIGH")] | length' trivy-results.json)
-          echo "critical_count=$CRITICAL_COUNT" >> $GITHUB_OUTPUT
-          echo "high_count=$HIGH_COUNT" >> $GITHUB_OUTPUT
-          echo "Found $CRITICAL_COUNT critical and $HIGH_COUNT high severity vulnerabilities"
-
-          if [ "$CRITICAL_COUNT" -gt 0 ] || [ "$HIGH_COUNT" -gt 5 ]; then
-            echo "create_pr=true" >> $GITHUB_OUTPUT
-          else
-            echo "create_pr=false" >> $GITHUB_OUTPUT
-          fi
-        else
-          echo "create_pr=false" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Create security patch PR
-      if: steps.check-vulns.outputs.create_pr == 'true'
-      uses: peter-evans/create-pull-request@v5
+        sarif_file: 'trivy-results.sarif'
+        
+    - name: Run Trivy in table format for summary
+      uses: aquasecurity/trivy-action@0.32.0  
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: |
-          fix: rebuild container to address security vulnerabilities
-
-          Automated security patch triggered by vulnerability scan.
-
-          - Critical vulnerabilities: ${{ steps.check-vulns.outputs.critical_count }}
-          - High vulnerabilities: ${{ steps.check-vulns.outputs.high_count }}
-
-          This change triggers a patch release to update the base image
-          and container dependencies to address discovered vulnerabilities.
-        title: 'fix: security patch for container vulnerabilities'
-        body: |
-          ## 🔒 Security Patch Required
-
-          This automated PR triggers a security patch release to address newly discovered vulnerabilities.
-
-          **Vulnerability Summary:**
-          - Critical: ${{ steps.check-vulns.outputs.critical_count }}
-          - High: ${{ steps.check-vulns.outputs.high_count }}
-
-          **What happens when this PR is merged:**
-          1. Release Please will create a patch release PR
-          2. Merging the release PR will trigger a new container build
-          3. The new container will use the latest base image and dependencies
-          4. A new patch version will be published to GHCR
-
-          **Review the security scan results:**
-          Check the Security tab for detailed vulnerability information.
-
-          ---
-          *This PR was automatically created by the security scan workflow.*
-
-          **Note:** This is a minimal change to trigger Release Please. The actual
-          container rebuild happens during the release process.
-        branch: security/patch-vulnerabilities
-        delete-branch: true
-        labels: |
-          security
-          automated
-          high-priority
-        assignees: imandrew
+        image-ref: 'openldap-futurama:test'
+        format: 'table'
+        severity: 'CRITICAL,HIGH'
+        exit-code: 0  # Don't fail, just report

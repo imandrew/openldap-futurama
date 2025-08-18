@@ -1,70 +1,103 @@
-.PHONY: start stop down test test-user shell logs help
+# OpenLDAP Futurama Test Server with AD Compatibility
+CONTAINER_NAME := openldap-futurama
+IMAGE_NAME := openldap-futurama:latest
+TEST_CONTAINER := $(CONTAINER_NAME)-test
+LDAP_PORT := 389
+TEST_PORT := 3890
+ADMIN_DN := cn=admin,dc=planetexpress,dc=com
+ADMIN_PW := GoodNewsEveryone
+BASE_DN := dc=planetexpress,dc=com
+
+.PHONY: all help build start stop restart test test-groups shell logs clean
+
+# Default target
+all: help
 
 help:
-	@echo "OpenLDAP Futurama Test Server"
-	@echo "Available targets:"
-	@echo "  make start    - Build and start the container with docker-compose"
-	@echo "  make stop     - Stop the container"
-	@echo "  make down     - Stop and remove containers and volumes"
-	@echo "  make test     - Test LDAP connectivity and search users"
-	@echo "  make test-user - Test specific user with AD attributes"
-	@echo "  make shell    - Open shell in running container"
-	@echo "  make logs     - View container logs"
-
-# Build and start the container using docker-compose
-start:
-	@echo "Starting OpenLDAP Futurama server..."
-	docker-compose up -d --build
+	@echo "OpenLDAP Futurama - AD Compatible Test Server"
 	@echo ""
-	@echo "Good news, everyone! LDAP is running:"
-	@echo "  LDAP Server: ldap://localhost:389"
-	@echo "  phpLDAPadmin: http://localhost:8080"
-	@echo "  Base DN: dc=planetexpress,dc=com"
-	@echo "  Admin: cn=admin,dc=planetexpress,dc=com"
-	@echo "  Password: GoodNewsEveryone"
+	@echo "Quick Start:"
+	@echo "  make build    - Build container image"  
+	@echo "  make start    - Start server on port $(LDAP_PORT)"
+	@echo "  make test     - Run test suite"
+	@echo ""
+	@echo "Management:"
+	@echo "  make stop     - Stop the server"
+	@echo "  make restart  - Restart the server"
+	@echo "  make logs     - View server logs"
+	@echo "  make shell    - Open shell in container"
+	@echo "  make clean    - Remove containers and images"
+	@echo ""
+	@echo "Connection Info:"
+	@echo "  Server: ldap://localhost:$(LDAP_PORT)"
+	@echo "  Base DN: $(BASE_DN)"
+	@echo "  Admin: $(ADMIN_DN)"
+	@echo "  Password: $(ADMIN_PW)"
 
-# Stop the container
+build:
+	@echo "Building OpenLDAP Futurama container..."
+	@docker build -t $(IMAGE_NAME) .
+	@echo "Build complete!"
+
+start: build
+	@docker stop $(CONTAINER_NAME) 2>/dev/null || true
+	@docker rm $(CONTAINER_NAME) 2>/dev/null || true
+	@echo "Starting OpenLDAP Futurama..."
+	@docker run -d --name $(CONTAINER_NAME) -p $(LDAP_PORT):389 $(IMAGE_NAME)
+	@echo "Server started on port $(LDAP_PORT)"
+
 stop:
-	@echo "Shutting down Futurama LDAP..."
-	docker-compose down
+	@echo "Stopping OpenLDAP Futurama..."
+	@docker stop $(CONTAINER_NAME) 2>/dev/null || true
+	@docker rm $(CONTAINER_NAME) 2>/dev/null || true
+	@echo "Server stopped"
 
-# Stop and remove containers and volumes
-down:
-	@echo "Stopping and removing containers and volumes..."
-	docker-compose down -v
+restart: stop start
 
-# Test LDAP connectivity and search for Futurama characters
-test:
-	@echo "Testing LDAP connectivity..."
+test: build
+	@echo "Running test suite..."
+	@docker stop $(TEST_CONTAINER) 2>/dev/null || true
+	@docker rm $(TEST_CONTAINER) 2>/dev/null || true
+	@docker run -d --name $(TEST_CONTAINER) -p $(TEST_PORT):389 $(IMAGE_NAME)
+	@echo "Waiting for LDAP initialization..."
+	@sleep 8
 	@echo ""
-	@echo "Searching for all users:"
-	@docker exec openldap-futurama ldapsearch -x -H ldap://localhost \
-		-b "dc=planetexpress,dc=com" \
-		-D "cn=admin,dc=planetexpress,dc=com" \
-		-w "GoodNewsEveryone" \
-		"(objectClass=inetOrgPerson)" cn mail sAMAccountName || echo "Test failed - is the container running?"
+	@echo "Testing user search..."
+	@docker exec $(TEST_CONTAINER) ldapsearch -x -H ldap://localhost \
+		-b "$(BASE_DN)" -D "$(ADMIN_DN)" -w "$(ADMIN_PW)" \
+		"(objectClass=inetOrgPerson)" cn sAMAccountName | grep -E "^(dn:|cn:|sAMAccountName:)" | head -20
 	@echo ""
-	@echo "Searching for ship crew members:"
-	@docker exec openldap-futurama ldapsearch -x -H ldap://localhost \
-		-b "cn=ship_crew,ou=groups,dc=planetexpress,dc=com" \
-		-D "cn=admin,dc=planetexpress,dc=com" \
-		-w "GoodNewsEveryone" \
-		"(objectClass=*)" || echo "Group search failed"
+	@echo "Testing AD groups..."
+	@docker exec $(TEST_CONTAINER) ldapsearch -x -H ldap://localhost \
+		-b "ou=groups,$(BASE_DN)" -D "$(ADMIN_DN)" -w "$(ADMIN_PW)" \
+		"(objectClass=group)" cn sAMAccountName groupType | grep -E "^(dn:|cn:|groupType:)" | head -15
+	@echo ""
+	@echo "Testing memberOf..."
+	@docker exec $(TEST_CONTAINER) ldapsearch -x -H ldap://localhost \
+		-b "uid=fry,ou=people,$(BASE_DN)" -D "$(ADMIN_DN)" -w "$(ADMIN_PW)" \
+		"(objectClass=*)" memberOf | grep "memberOf:"
+	@docker stop $(TEST_CONTAINER) >/dev/null
+	@docker rm $(TEST_CONTAINER) >/dev/null
+	@echo ""
+	@echo "All tests passed!"
 
-# Test specific user with memberOf
-test-user:
-	@echo "Testing Bender's account and group membership:"
-	@docker exec openldap-futurama ldapsearch -x -H ldap://localhost \
-		-b "uid=bender,ou=robots,dc=planetexpress,dc=com" \
-		-D "cn=admin,dc=planetexpress,dc=com" \
-		-w "GoodNewsEveryone" \
-		"(objectClass=*)" cn mail sAMAccountName memberOf || echo "User test failed"
+test-groups: 
+	@echo "Testing AD-compatible groups..."
+	@docker exec $(CONTAINER_NAME) ldapsearch -x -H ldap://localhost \
+		-b "ou=groups,$(BASE_DN)" -D "$(ADMIN_DN)" -w "$(ADMIN_PW)" \
+		"(objectClass=group)" cn sAMAccountName groupType member
 
-# Open shell in the running container
 shell:
-	@echo "Opening shell in OpenLDAP Futurama container..."
-	docker exec -it openldap-futurama /bin/bash
+	@docker exec -it $(CONTAINER_NAME) /bin/sh
 
-# View container logs
 logs:
-	docker-compose logs -f openldap-futurama
+	@docker logs -f $(CONTAINER_NAME)
+
+clean:
+	@echo "Cleaning up..."
+	@docker stop $(CONTAINER_NAME) 2>/dev/null || true
+	@docker stop $(TEST_CONTAINER) 2>/dev/null || true
+	@docker rm $(CONTAINER_NAME) 2>/dev/null || true
+	@docker rm $(TEST_CONTAINER) 2>/dev/null || true
+	@docker rmi $(IMAGE_NAME) 2>/dev/null || true
+	@echo "Cleanup complete"
