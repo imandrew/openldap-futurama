@@ -1,6 +1,0 @@
-dn: dc=planetexpress,dc=com
-objectClass: top
-objectClass: dcObject
-objectClass: organization
-o: Planet Express Inc
-dc: planetexpress
