@@ -6,10 +6,14 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
     - name: Checkout repository
@@ -54,13 +58,28 @@ jobs:
           -D "cn=admin,dc=planetexpress,dc=com" -w "GoodNewsEveryone" \
           -b "dc=planetexpress,dc=com" "(uid=amy)" memberOf
           
-    - name: Security scan
-      uses: aquasecurity/trivy-action@master
+    - name: Security scan (SARIF)
+      uses: aquasecurity/trivy-action@0.32.0
+      with:
+        image-ref: 'openldap-futurama:latest'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+        exit-code: 0
+        
+    - name: Upload security results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+        
+    - name: Security scan (table)
+      uses: aquasecurity/trivy-action@0.32.0
       with:
         image-ref: 'openldap-futurama:latest'
         format: 'table'
         severity: 'CRITICAL,HIGH'
-        exit-code: 0  # Don't fail on vulnerabilities for now
+        exit-code: 0
         
     - name: Cleanup
       if: always()
