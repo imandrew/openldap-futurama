@@ -25,17 +25,32 @@ make start
 
 All users have password matching their username (e.g., username: `fry`, password: `fry`):
 
-| Username | Email | Groups |
-|----------|-------|--------|
-| fry | fry@planetexpress.com | ship_crew, delivery_crew |
-| leela | leela@planetexpress.com | ship_crew, delivery_crew, management |
-| bender | bender@planetexpress.com | ship_crew, delivery_crew |
-| professor | professor@planetexpress.com | scientists, management |
-| amy | amy@planetexpress.com | scientists, interns |
-| hermes | hermes@planetexpress.com | management, bureaucrats |
-| zoidberg | zoidberg@planetexpress.com | - |
-| scruffy | scruffy@planetexpress.com | - |
-| nibbler | nibbler@planetexpress.com | ship_crew |
+| Username | Title | Department | Manager | Groups |
+|----------|-------|------------|---------|--------|
+| fry | Delivery Boy | Delivery | leela | ship_crew, delivery_crew |
+| leela | Ship Captain | Command | hermes | ship_crew, delivery_crew, management |
+| bender | Ship Cook | Ship Operations | leela | ship_crew, delivery_crew |
+| professor | CEO and Founder | Executive | - | scientists, management |
+| amy | Intern | Engineering | leela | scientists, interns |
+| hermes | Bureaucrat Grade 34 | Administration | professor | management, bureaucrats |
+| zoidberg | Staff Doctor | Medical | professor | - |
+| scruffy | Janitor | Maintenance | professor | - |
+| nibbler | Ship Mascot | Operations | - | ship_crew |
+
+## Organizational Hierarchy
+
+```
+Professor Farnsworth (CEO)
+├── Hermes Conrad (Operations Manager)
+│   └── Leela (Ship Captain)
+│       ├── Fry (Delivery Boy)
+│       ├── Bender (Ship Cook)
+│       └── Amy Wong (Intern)
+├── Dr. Zoidberg (Staff Doctor)
+└── Scruffy (Janitor)
+
+Nibbler (Independent - Ship Mascot/Secret Agent)
+```
 
 ## Groups
 
@@ -82,12 +97,30 @@ ldapsearch -x -H ldap://localhost \
   -b "dc=planetexpress,dc=com" "(sAMAccountName=fry)" memberOf
 ```
 
+### Check User's Manager
+```bash
+ldapsearch -x -H ldap://localhost \
+  -D "cn=admin,dc=planetexpress,dc=com" \
+  -w "GoodNewsEveryone" \
+  -b "dc=planetexpress,dc=com" "(uid=fry)" manager
+```
+
+### Find Direct Reports
+```bash
+ldapsearch -x -H ldap://localhost \
+  -D "cn=admin,dc=planetexpress,dc=com" \
+  -w "GoodNewsEveryone" \
+  -b "dc=planetexpress,dc=com" "(manager=uid=leela,ou=mutants,dc=planetexpress,dc=com)" uid cn title
+```
+
 ## AD Compatibility Features
 
 - `sAMAccountName` attribute for all users
 - `memberOf` overlay for automatic group membership
 - AD-compatible `group` objectClass
 - Standard AD group types
+- `manager` attribute for organizational hierarchy
+- `userPrincipalName` in user@domain format
 
 ## Docker Image
 
