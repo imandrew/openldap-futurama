@@ -28,7 +28,7 @@ All users have password matching their username (e.g., username: `fry`, password
 | Username | Title | Department | Manager | Groups |
 |----------|-------|------------|---------|--------|
 | fry | Delivery Boy | Delivery | leela | ship_crew, delivery_crew |
-| leela | Ship Captain | Command | hermes | ship_crew, delivery_crew, management |
+| leela | Ship Captain | Command | hermes | ship_crew, delivery_crew |
 | bender | Ship Cook | Ship Operations | leela | ship_crew, delivery_crew |
 | professor | CEO and Founder | Executive | - | scientists, management |
 | amy | Intern | Engineering | leela | scientists, interns |
@@ -59,7 +59,7 @@ Nibbler (Independent - Ship Mascot/Secret Agent)
 | ship_crew | fry, leela, bender, nibbler | Planet Express Ship Crew |
 | delivery_crew | fry, leela, bender | Delivery Crew Members |
 | scientists | professor, amy | Scientific Personnel |
-| management | professor, hermes, leela | Management Team |
+| management | professor, hermes | Management Team |
 | interns | amy | Unpaid Interns |
 | bureaucrats | hermes | Central Bureaucracy |
 
