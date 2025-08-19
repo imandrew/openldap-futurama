@@ -24,6 +24,7 @@ employeeType: Human
 employeeNumber: PE001
 departmentNumber: Delivery
 telephoneNumber: +1-212-555-0101
+manager: uid=leela,ou=mutants,dc=planetexpress,dc=com
 sAMAccountName: fry
 userPrincipalName: fry@planetexpress.com
 
@@ -50,6 +51,7 @@ employeeType: Mutant
 employeeNumber: PE002
 departmentNumber: Command
 telephoneNumber: +1-212-555-0102
+manager: uid=hermes,ou=people,dc=planetexpress,dc=com
 sAMAccountName: leela
 userPrincipalName: leela@planetexpress.com
 
@@ -77,6 +79,7 @@ employeeNumber: PE003
 departmentNumber: Ship Operations
 telephoneNumber: +1-212-555-0103
 description: Bending Unit 22, Serial 2716057
+manager: uid=leela,ou=mutants,dc=planetexpress,dc=com
 sAMAccountName: bender
 userPrincipalName: bender@planetexpress.com
 
@@ -129,6 +132,7 @@ employeeType: Human
 employeeNumber: PE005
 departmentNumber: Engineering
 telephoneNumber: +1-212-555-0105
+manager: uid=leela,ou=mutants,dc=planetexpress,dc=com
 sAMAccountName: amy
 userPrincipalName: amy@planetexpress.com
 
@@ -155,6 +159,7 @@ employeeType: Human
 employeeNumber: PE006
 departmentNumber: Administration
 telephoneNumber: +1-212-555-0106
+manager: uid=professor,ou=people,dc=planetexpress,dc=com
 sAMAccountName: hermes
 userPrincipalName: hermes@planetexpress.com
 
@@ -181,6 +186,7 @@ employeeType: Alien
 employeeNumber: PE007
 departmentNumber: Medical
 telephoneNumber: +1-212-555-0107
+manager: uid=professor,ou=people,dc=planetexpress,dc=com
 sAMAccountName: zoidberg
 userPrincipalName: zoidberg@planetexpress.com
 
@@ -207,6 +213,7 @@ employeeType: Human
 employeeNumber: PE008
 departmentNumber: Maintenance
 telephoneNumber: +1-212-555-0108
+manager: uid=professor,ou=people,dc=planetexpress,dc=com
 sAMAccountName: scruffy
 userPrincipalName: scruffy@planetexpress.com
 
