@@ -40,7 +40,6 @@ groupType: -2147483646
 description: Management Team
 member: uid=professor,ou=people,dc=planetexpress,dc=com
 member: uid=hermes,ou=people,dc=planetexpress,dc=com
-member: uid=leela,ou=mutants,dc=planetexpress,dc=com
 
 dn: cn=interns,ou=groups,dc=planetexpress,dc=com
 objectClass: group
